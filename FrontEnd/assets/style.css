@@ -207,9 +207,6 @@ footer nav ul {
 	cursor: pointer;
 	padding: 10px;
 	transition: all 0.2s;
-}
-
-.filter-button-inactive {
 	color: var(--color-green);
 	background-color: transparent;
 }
