@@ -187,8 +187,15 @@ footer nav ul {
 }
 
 /* AJOUTS */
+/* GLOBAL */
+a {
+	color: black;
+	text-decoration: none;
+}
+/* HOMEPAGE */
 :root {
 	--color-green: #1D6154;
+	--bg-color: #FFFEF8;
 }
 
 #portfolio .portfolio-filters {
@@ -214,4 +221,65 @@ footer nav ul {
 .filter-button-active {
 	background-color: var(--color-green) !important;
 	color: white !important;
+}
+
+/* LOGIN PAGE */
+html {
+	position: relative;
+
+}
+#login-body {
+	background-color: var(--bg-color);
+	height: 95vh;
+}
+
+#login-section {
+	margin-top: 6rem;
+}
+
+#login-section,
+#login-section form {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 30px;
+}
+
+#login-section form fieldset {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: start;
+	gap: 7px;
+}
+
+#login-section fieldset input {
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+	width: 379px;
+	height: 51px;
+	padding-right: 15px;
+	padding-left: 15px;
+	box-sizing: border-box;
+}
+
+#login-section #login-section_button-connect {
+	background-color: var(--color-green);
+	color: white;
+	width: 179px;
+	height: 36px;
+	border-radius: 60px;
+	border: none;
+}
+
+#login-section form #forget-password {
+	text-decoration: underline;
+}
+
+#login-body footer {
+	background-color: white;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
