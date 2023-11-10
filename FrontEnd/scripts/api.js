@@ -11,12 +11,12 @@ export const getWorks = () => get(URL_WORKS)
 export const getCategories = () => get(URL_CATEGORIES)
 
 // METHODE POST CONNEXION
-export const postLogin = data => fetch(URL_LOGIN, {
+export const postLogin = userLogin => fetch(URL_LOGIN, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(userLogin)
 })
     .then(response => response.json())
     .catch(error => {
