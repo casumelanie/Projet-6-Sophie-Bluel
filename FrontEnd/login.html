@@ -15,7 +15,7 @@
 
 <body id="login-body">
     <header>
-        <h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+        <h1><a href="index.html">Sophie Bluel</a> <span>Architecte d'inteérieur</span></h1>
         <nav>
             <ul>
                 <li>projets</li>
@@ -28,16 +28,16 @@
     <main>
         <section id="login-section">
             <h2>Log In</h2>
-            <form method="get" action="">
+            <form id="login-form" method="get" action="">
                 <fieldset>
                     <label for="mail">E-mail</label>
                     <input id="mail" name="e-mail" type="email" required>
                 </fieldset>
                 <fieldset>
                     <label for="password">Mot de passe</label>
-                    <input id="password" name="text" type="email" required>
+                    <input id="password" name="text" type="password" required>
                 </fieldset>
-                <input id="login-section_button-connect" type="button" value="Se connecter">
+                <button id="connection-button" type="submit">Se connecter</button>
                 <a id="forget-password" href="#">Mot de passe oublié</a>
             </form>
         </section>
