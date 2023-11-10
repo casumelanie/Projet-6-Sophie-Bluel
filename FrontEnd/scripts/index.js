@@ -1,7 +1,7 @@
 import { getWorks, getCategories } from './api.js'
 import { projectGallery, filterContainer } from './domLinker.js'
 
-// METHODE DE CREATIONS DES PROJETS
+// METHODE DE CREATION DES PROJETS
 const createGallery = projects => {
     // REMISE A 0 DE LA GALERIE POUR LE FILTRAGE
     projectGallery.innerHTML = ''
