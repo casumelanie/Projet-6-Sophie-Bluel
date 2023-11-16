@@ -1,5 +1,5 @@
 import { getWorks, getCategories } from './api.js'
-import { projectGallery, filterContainer } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, body } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS
 const createGallery = projects => {
@@ -22,7 +22,7 @@ const createGallery = projects => {
 
 // METHODE BOUTONS DE FILTRAGE
 const createCategories = categories => {
-// CREATION DU FILTRE ALL
+    // CREATION DU FILTRE ALL
     const filterButtonAll = document.createElement('button')
     filterButtonAll.classList.add('filter-button')
     filterButtonAll.classList.add('filter-button-all')
@@ -68,10 +68,41 @@ const createCategories = categories => {
     })
 }
 
-// INITIALISATION DE LA GALLERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE
+// INITIALISATION DE LA GALLERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE et creationmode
 const init = async () => {
     getWorks().then(projects => createGallery(projects))
     getCategories().then(categories => createCategories(categories))
 }
 
 init()
+
+// FONCTION DE CRÉATION DU MODE D'ÉDITION
+const creationEditionMode = async () => {
+    const editionMode = document.createElement('div')
+    editionMode.setAttribute('class', 'nav-edition')
+    const editionIcons = document.createElement('i')
+    editionIcons.setAttribute('class', 'fa-regular fa-pen-to-square')
+    editionMode.appendChild(editionIcons)
+    const editionText = document.createElement('p')
+    editionMode.appendChild(editionText)
+    editionText.innerText = 'Mode édition'
+    body.insertBefore(editionMode, body.firstChild)
+}
+
+// MISE À JOUR DE L'AFFICHAGE EN FONCTION DE L'ÉTAT DE CONNEXION
+if (localStorage.token) {
+    loginButton.innerText = 'logout'
+    loginButton.addEventListener('click', function () {
+        // SUPPRESSION DU TOKEN DANS LE LOCAL STORAGE AU CLIC SUR LOGOUT ET MAJ AFFICHAGE
+        localStorage.clear()
+        loginButton.innerText = 'login'
+        document.location.href = 'index.html' // REDIR POUR ACTUALISATION
+    })
+    // AJOUT DU MODE EDITION SI TOKEN PRÉSENT DANS LE LOCAL STORAGE
+    creationEditionMode()
+} else {
+    loginButton.innerText = 'login'
+    loginButton.addEventListener('click', function () {
+        document.location.href = 'login.html'
+    })
+}
