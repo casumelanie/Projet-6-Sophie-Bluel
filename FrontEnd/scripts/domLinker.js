@@ -2,6 +2,7 @@
 
 export const body = document.querySelector('body')
 export const loginButton = document.getElementById('login-link')
+export const editButtonContainer = document.getElementById('portfolio-title')
 
 export const projectGallery = document.querySelector('#portfolio .gallery')
 export const filterContainer = document.querySelector('#portfolio .portfolio-filters')
