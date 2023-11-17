@@ -1,5 +1,5 @@
 import { getWorks, getCategories } from './api.js'
-import { projectGallery, filterContainer, loginButton, body, editButtonContainer } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, editHeader, editButton, modaleEdit } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS
 const createGallery = projects => {
@@ -33,9 +33,9 @@ const createCategories = categories => {
     filterButtonAll.addEventListener('click', function () {
         const btnsFilter = document.querySelectorAll('.portfolio-filters .filter-button')
         btnsFilter.forEach(btn => {
-            btn.classList.remove('filter-button-active') // J'ENLEVE LA CLASSE ACTIVE DE TOUS LES BTNS
+            btn.classList.remove('filter-button-active') // SUPPRESSION DE LA CLASSE ACTIVE DE TOUS LES BTNS
         })
-        filterButtonAll.classList.add('filter-button-active') // J'AJOUTE LA CLASSE ACTIVE AU BTN ALL
+        filterButtonAll.classList.add('filter-button-active') // AJOUT DE LA CLASSE ACTIVE AU BTN ALL
 
         // REMISE A 0 DE LA GALERIE RE CREATION COMPLETE
         getWorks().then(projects => createGallery(projects))
@@ -57,70 +57,37 @@ const createCategories = categories => {
             })
             filterButton.classList.add('filter-button-active')
 
-            // J'EXECUTE UN NOUVEL APPEL A L'API POUR CREER LES PROJETS CORRESPONDANT AU FILTRE
+            // EXECUTION D'UN NOUVEL APPEL A L'API POUR CREER LES PROJETS CORRESPONDANT AU FILTRE
             getWorks().then(projects => {
-                // JE RECUPERE LES PROJETS FILTRÉS DANS FILTEREDPROJECTS
+                // RÉCUPÉRATION DES PROJETS FILTRÉS DANS FILTEREDPROJECTS
                 const filteredProjects = projects.filter(project => project.categoryId === categorie.id)
-                // JE CREER LA GALERIE EN FONCTION DE L'ID DU PROJET
+                // CRÉATION DE LA GALERIE EN FONCTION DE L'ID DU PROJET
                 createGallery(filteredProjects)
             })
         })
     })
 }
 
-// INITIALISATION DE LA GALLERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE et creationmode
+// INITIALISATION DE LA GALLERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE
 const init = async () => {
     getWorks().then(projects => createGallery(projects))
     getCategories().then(categories => createCategories(categories))
 }
-
 init()
-
-// FONCTION DE CRÉATION DU MODE D'ÉDITION
-const creationEditionMode = async () => {
-    // EN-TETE NOIR
-    const editionMode = document.createElement('div')
-    editionMode.setAttribute('class', 'nav-edition')
-    const editionIcons = document.createElement('i')
-    editionIcons.setAttribute('class', 'fa-regular fa-pen-to-square')
-    editionMode.appendChild(editionIcons)
-    const editionText = document.createElement('p')
-    editionMode.appendChild(editionText)
-    editionText.innerText = 'Mode édition'
-    body.insertBefore(editionMode, body.firstChild)
-
-    // BOUTON MODIFIER
-    const editButton = document.createElement('a')
-    editButton.setAttribute('href', '#')
-    editButtonContainer.appendChild(editButton)
-    const editButtonIcons = document.createElement('i')
-    editButtonIcons.setAttribute('class', 'fa-regular fa-pen-to-square')
-    editButton.appendChild(editButtonIcons)
-    const editButtonText = document.createElement('span')
-    editButtonText.innerText = 'modifier'
-    editButton.appendChild(editButtonText)
-
-    /* editButton.addEventListener('click', function () {
-            // CODE POUR OUVRIR LA FUTURE FENETRE MODALE
-        }) */
-
-    // DISPARITION DE LA SECTION DES FILTRES
-    filterContainer.style.display = 'none'
-}
 
 // MISE À JOUR DE L'AFFICHAGE EN FONCTION DE L'ÉTAT DE CONNEXION
 if (localStorage.token) {
     loginButton.innerText = 'logout'
+    editHeader.classList.remove('hidden')
+    editButton.classList.remove('hidden')
+    filterContainer.classList.add('hidden')
     loginButton.addEventListener('click', function () {
         // SUPPRESSION DU TOKEN DANS LE LOCAL STORAGE AU CLIC SUR LOGOUT ET MAJ AFFICHAGE
         localStorage.clear()
         loginButton.innerText = 'login'
-        document.location.href = 'index.html' // REDIR POUR ACTUALISATION
+        document.location.href = 'index.html' // REDIRECTION POUR ACTUALISATION
     })
-    // AJOUT DU MODE EDITION SI TOKEN PRÉSENT DANS LE LOCAL STORAGE
-    creationEditionMode()
 } else {
-    loginButton.innerText = 'login'
     loginButton.addEventListener('click', function () {
         document.location.href = 'login.html'
     })
