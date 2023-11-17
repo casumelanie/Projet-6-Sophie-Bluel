@@ -1,5 +1,5 @@
 import { getWorks, getCategories } from './api.js'
-import { projectGallery, filterContainer, loginButton, body } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, body, editButtonContainer } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS
 const createGallery = projects => {
@@ -78,6 +78,7 @@ init()
 
 // FONCTION DE CRÉATION DU MODE D'ÉDITION
 const creationEditionMode = async () => {
+    // EN-TETE NOIR
     const editionMode = document.createElement('div')
     editionMode.setAttribute('class', 'nav-edition')
     const editionIcons = document.createElement('i')
@@ -87,6 +88,24 @@ const creationEditionMode = async () => {
     editionMode.appendChild(editionText)
     editionText.innerText = 'Mode édition'
     body.insertBefore(editionMode, body.firstChild)
+
+    // BOUTON MODIFIER
+    const editButton = document.createElement('a')
+    editButton.setAttribute('href', '#')
+    editButtonContainer.appendChild(editButton)
+    const editButtonIcons = document.createElement('i')
+    editButtonIcons.setAttribute('class', 'fa-regular fa-pen-to-square')
+    editButton.appendChild(editButtonIcons)
+    const editButtonText = document.createElement('span')
+    editButtonText.innerText = 'modifier'
+    editButton.appendChild(editButtonText)
+
+    /* editButton.addEventListener('click', function () {
+            // CODE POUR OUVRIR LA FUTURE FENETRE MODALE
+        }) */
+
+    // DISPARITION DE LA SECTION DES FILTRES
+    filterContainer.style.display = 'none'
 }
 
 // MISE À JOUR DE L'AFFICHAGE EN FONCTION DE L'ÉTAT DE CONNEXION
