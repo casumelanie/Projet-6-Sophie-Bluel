@@ -15,12 +15,16 @@
 </head>
 
 <body>
+	<div id="edit-header" class="hidden">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>mode édition</p>
+	</div>
 	<header>
 		<h1><a href="index.html">Sophie Bluel</a> <span>Architecte d'inteérieur</span></h1>
 		<nav>
 			<ul>
-				<li>projets</li>
-				<li>contact</li>
+				<li><a href="index.html#portfolio">projets</a></li>
+				<li><a href="index.html#contact">contact</a></li>
 				<li id="login-link"><a href="./login.html">login</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
@@ -45,6 +49,10 @@
 		<section id="portfolio">
 			<div id="portfolio-title">
 				<h2>Mes Projets</h2>
+				<a id="edit-button" href="#" class="hidden">
+					<i class="fa-regular fa-pen-to-square"></i>
+					<span>modifier</span>
+				</a>
 			</div>
 			<div class="portfolio-filters">
 			</div>
@@ -73,8 +81,14 @@
 			</ul>
 		</nav>
 	</footer>
-	<script type="module" src="./scripts/index.js"></script>
 
+	<div id="modale" class="hidden">
+		<div id="modale-container">
+
+		</div>
+	</div>
+
+	<script type="module" src="./scripts/index.js"></script>
 </body>
 
 </html>
