@@ -1,32 +1,27 @@
 import { postLogin } from './api.js'
-import { loginEmail, loginPassword, formLogin } from './domLinker.js'
-localStorage.clear()
+import { loginEmail, loginPassword, loginForm } from './domLinker.js'
 
-// Fonction de connexion
-const connectionFunction = async () => {
+// Lancement de la fonction connexion au clic sur submit
+loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault()
+    // Récupération de l'user et du mdp renseignés
     const user = {
         email: loginEmail.value,
         password: loginPassword.value
     }
 
-    // Methode post connexion
     postLogin(user)
-        .then(data => {
+        .then((data) => {
             if (data.token) {
-                // Stockage du token dans le local storage
                 const token = data.token
                 localStorage.token = token
                 console.log(localStorage)
-                // Redirection vers la page d'accueil
                 document.location.href = 'index.html'
             } else {
-                alert('Erreur dans l\'identifiant ou le mot de passe')
+                throw alert('Erreur dans l\'identifiant ou le mot de passe')
             }
-        }).catch(error => alert('API non disponible : ' + error.message))
-}
-
-// Lancement de la fonction connexion au clic sur le bouton de connexion
-formLogin.addEventListener('submit', function (e) {
-    e.preventDefault()
-    connectionFunction()
+        })
+        .catch(error => {
+            throw alert('API non disponible : ' + error.message)
+        })
 })

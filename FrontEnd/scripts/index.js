@@ -1,5 +1,5 @@
 import { getWorks, getCategories } from './api.js'
-import { projectGallery, filterContainer } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, editHeader, editButton, modaleEdit } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS
 const createGallery = projects => {
@@ -22,7 +22,7 @@ const createGallery = projects => {
 
 // METHODE BOUTONS DE FILTRAGE
 const createCategories = categories => {
-// CREATION DU FILTRE ALL
+    // CREATION DU FILTRE ALL
     const filterButtonAll = document.createElement('button')
     filterButtonAll.classList.add('filter-button')
     filterButtonAll.classList.add('filter-button-all')
@@ -33,9 +33,9 @@ const createCategories = categories => {
     filterButtonAll.addEventListener('click', function () {
         const btnsFilter = document.querySelectorAll('.portfolio-filters .filter-button')
         btnsFilter.forEach(btn => {
-            btn.classList.remove('filter-button-active') // J'ENLEVE LA CLASSE ACTIVE DE TOUS LES BTNS
+            btn.classList.remove('filter-button-active') // SUPPRESSION DE LA CLASSE ACTIVE DE TOUS LES BTNS
         })
-        filterButtonAll.classList.add('filter-button-active') // J'AJOUTE LA CLASSE ACTIVE AU BTN ALL
+        filterButtonAll.classList.add('filter-button-active') // AJOUT DE LA CLASSE ACTIVE AU BTN ALL
 
         // REMISE A 0 DE LA GALERIE RE CREATION COMPLETE
         getWorks().then(projects => createGallery(projects))
@@ -57,11 +57,11 @@ const createCategories = categories => {
             })
             filterButton.classList.add('filter-button-active')
 
-            // J'EXECUTE UN NOUVEL APPEL A L'API POUR CREER LES PROJETS CORRESPONDANT AU FILTRE
+            // EXECUTION D'UN NOUVEL APPEL A L'API POUR CREER LES PROJETS CORRESPONDANT AU FILTRE
             getWorks().then(projects => {
-                // JE RECUPERE LES PROJETS FILTRÉS DANS FILTEREDPROJECTS
+                // RÉCUPÉRATION DES PROJETS FILTRÉS DANS FILTEREDPROJECTS
                 const filteredProjects = projects.filter(project => project.categoryId === categorie.id)
-                // JE CREER LA GALERIE EN FONCTION DE L'ID DU PROJET
+                // CRÉATION DE LA GALERIE EN FONCTION DE L'ID DU PROJET
                 createGallery(filteredProjects)
             })
         })
@@ -73,5 +73,22 @@ const init = async () => {
     getWorks().then(projects => createGallery(projects))
     getCategories().then(categories => createCategories(categories))
 }
-
 init()
+
+// MISE À JOUR DE L'AFFICHAGE EN FONCTION DE L'ÉTAT DE CONNEXION
+if (localStorage.token) {
+    loginButton.innerText = 'logout'
+    editHeader.classList.remove('hidden')
+    editButton.classList.remove('hidden')
+    filterContainer.classList.add('hidden')
+    loginButton.addEventListener('click', function () {
+        // SUPPRESSION DU TOKEN DANS LE LOCAL STORAGE AU CLIC SUR LOGOUT ET MAJ AFFICHAGE
+        localStorage.clear()
+        loginButton.innerText = 'login'
+        document.location.href = 'index.html' // REDIRECTION POUR ACTUALISATION
+    })
+} else {
+    loginButton.addEventListener('click', function () {
+        document.location.href = 'login.html'
+    })
+}
