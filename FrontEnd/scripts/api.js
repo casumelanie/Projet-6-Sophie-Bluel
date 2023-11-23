@@ -22,3 +22,16 @@ export const postLogin = userLogin => fetch(URL_LOGIN, {
     .catch(error => {
         throw error
     })
+
+// METHODE SUPPRESSION PROJET
+export const deleteWork = id => fetch(URL_DELETE, {
+    method: 'DELETE',
+    headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'My-Custom-Header': 'foobar'
+    }
+})
+    .then(() => element.innerHTML = 'Delete successful')
+    .catch(error => {
+        throw error
+    })
