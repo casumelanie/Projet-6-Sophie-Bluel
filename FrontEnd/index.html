@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<div id="edit-header" class="hidden">
+	<div id="edit-header" class="hidden modal-trigger">
 		<i class="fa-regular fa-pen-to-square"></i>
 		<p>mode édition</p>
 	</div>
@@ -49,7 +49,7 @@
 		<section id="portfolio">
 			<div id="portfolio-title">
 				<h2>Mes Projets</h2>
-				<a id="edit-button" href="#" class="hidden">
+				<a id="edit-button" href="#" class="hidden modal-trigger">
 					<i class="fa-regular fa-pen-to-square"></i>
 					<span>modifier</span>
 				</a>
@@ -82,9 +82,30 @@
 		</nav>
 	</footer>
 
-	<div id="modale" class="hidden">
-		<div id="modale-container">
+	<div id="modal-container" class="hidden">
+		<div class="overlay modal-trigger"></div>
 
+		<div class="modal">
+			<i class="fa-solid fa-xmark close-modal modal-trigger"></i>
+			<span>Galerie photo</span>
+
+			<div class="gallery modal-gallery">
+			</div>
+
+			<div class="separator"></div>
+			<a href="#" id="" class="addProjectButton">Ajouter une photo</a>
+		</div>
+
+		<div class="modal-add-project hidden">
+			<div class="modal-icons">
+				<i class="fa-solid fa-arrow-left back-gallery"></i>
+				<i class="fa-solid fa-xmark close-modal modal-trigger"></i>
+			</div>
+
+			<span>Ajout photo</span>
+
+			<div class="separator"></div>
+			<a href="#" id="" class="addProjectButton addProjectPush">Valider</a>
 		</div>
 	</div>
 

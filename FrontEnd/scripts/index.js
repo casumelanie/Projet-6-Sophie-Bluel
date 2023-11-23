@@ -1,43 +1,56 @@
 import { getWorks, getCategories } from './api.js'
-import { projectGallery, filterContainer, loginButton, editHeader, editButton, modaleEdit } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal } from './domLinker.js'
 
-// METHODE DE CREATION DES PROJETS
+// METHODE DE CREATION DES PROJETS POUR CHAQUE GALERIE
 const createGallery = projects => {
-    // REMISE A 0 DE LA GALERIE POUR LE FILTRAGE
-    projectGallery.innerHTML = ''
-    // CREATION ET AJOUT DES CARTES POUR CHAQUE PROJET
-    projects.forEach(project => {
-        const projectCard = document.createElement('figure')
-        const projectImg = document.createElement('img')
-        const projectTitle = document.createElement('figcaption')
-        projectImg.src = project.imageUrl
-        projectImg.alt = project.title
-        projectTitle.innerText = project.title
-        projectCard.appendChild(projectImg)
-        projectCard.appendChild(projectTitle)
-        projectGallery.appendChild(projectCard)
+    projectGallery.forEach((gallery, index) => {
+        // Remise a 0 de la galerie lors du filtrage
+        gallery.innerHTML = ''
+        // Creation et ajout des cartes projets
+        projects.forEach(project => {
+            const projectCard = document.createElement('figure')
+            const projectImg = document.createElement('img')
+            const projectTitle = document.createElement('figcaption')
+            projectImg.src = project.imageUrl
+            projectImg.alt = project.title
+            projectTitle.innerText = project.title
+            projectCard.appendChild(projectImg)
+            projectCard.appendChild(projectTitle)
+            gallery.appendChild(projectCard)
+        })
+
+        // Fenetre modale : ajout corbeille et supression titre projet
+        if (index === 1) {
+            const modalProjects = document.querySelectorAll('.modal-gallery figure')
+            modalProjects.forEach(modalProject => {
+                const trashIcon = document.createElement('i')
+                trashIcon.classList.add('fa-trash-can', 'fa-solid')
+                modalProject.appendChild(trashIcon)
+                const projectTitle = document.querySelector('.modal-gallery figcaption')
+                modalProject.removeChild(projectTitle)
+            })
+        }
     })
-    console.log(projects)
 }
 
-// METHODE BOUTONS DE FILTRAGE
+// METHODE DE FILTRAGE DES PROJETS
 const createCategories = categories => {
-    // CREATION DU FILTRE ALL
+    // Creation du filtre All
     const filterButtonAll = document.createElement('button')
     filterButtonAll.classList.add('filter-button')
     filterButtonAll.classList.add('filter-button-all')
     filterButtonAll.innerText = 'Tous'
     filterContainer.appendChild(filterButtonAll)
     filterButtonAll.classList.add('filter-button-active')
-    // COMPORTEMENT AU CLIC SUR LE BOUTON ALL
+    // Comportement au clic sur le filtre All
     filterButtonAll.addEventListener('click', function () {
         const btnsFilter = document.querySelectorAll('.portfolio-filters .filter-button')
         btnsFilter.forEach(btn => {
-            btn.classList.remove('filter-button-active') // SUPPRESSION DE LA CLASSE ACTIVE DE TOUS LES BTNS
+            btn.classList.remove('filter-button-active') // Suppression de la classe active de tous les btns
         })
-        filterButtonAll.classList.add('filter-button-active') // AJOUT DE LA CLASSE ACTIVE AU BTN ALL
+        filterButtonAll.classList.add('filter-button-active') // Ajouts de la classe active au btn All
 
-        // REMISE A 0 DE LA GALERIE RE CREATION COMPLETE
+        // Affichage de la galerie au clic sur le filtre All
         getWorks().then(projects => createGallery(projects))
     })
 
@@ -49,7 +62,7 @@ const createCategories = categories => {
         filterButton.innerText = categorie.name
         filterContainer.appendChild(filterButton)
 
-        // COMPORTEMENT AU CLIC SUR LES BOUTONS DE FILTRE CATEGORIE
+        // Comportement au clic sur les filtres
         filterButton.addEventListener('click', function () {
             const btnsFilter = document.querySelectorAll('.portfolio-filters .filter-button')
             btnsFilter.forEach(btn => {
@@ -57,23 +70,16 @@ const createCategories = categories => {
             })
             filterButton.classList.add('filter-button-active')
 
-            // EXECUTION D'UN NOUVEL APPEL A L'API POUR CREER LES PROJETS CORRESPONDANT AU FILTRE
+            // Creation de la galerie en fonction du filtre
             getWorks().then(projects => {
-                // RÉCUPÉRATION DES PROJETS FILTRÉS DANS FILTEREDPROJECTS
+                // Récupération des projets filtrés
                 const filteredProjects = projects.filter(project => project.categoryId === categorie.id)
-                // CRÉATION DE LA GALERIE EN FONCTION DE L'ID DU PROJET
+                // Création de la galerie en fonction de l'id du projet
                 createGallery(filteredProjects)
             })
         })
     })
 }
-
-// INITIALISATION DE LA GALLERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE
-const init = async () => {
-    getWorks().then(projects => createGallery(projects))
-    getCategories().then(categories => createCategories(categories))
-}
-init()
 
 // MISE À JOUR DE L'AFFICHAGE EN FONCTION DE L'ÉTAT DE CONNEXION
 if (localStorage.token) {
@@ -82,13 +88,26 @@ if (localStorage.token) {
     editButton.classList.remove('hidden')
     filterContainer.classList.add('hidden')
     loginButton.addEventListener('click', function () {
-        // SUPPRESSION DU TOKEN DANS LE LOCAL STORAGE AU CLIC SUR LOGOUT ET MAJ AFFICHAGE
+        // Suppression du token dans le local sto au clic sur logout + maj affichage
         localStorage.clear()
         loginButton.innerText = 'login'
-        document.location.href = 'index.html' // REDIRECTION POUR ACTUALISATION
+        document.location.href = 'index.html' // Redir pour actualisation
     })
-} else {
+    // Ouverture / fermeture de la modale
+    triggerModal.forEach(trigger => trigger.addEventListener('click', function (e) {
+        modalEdit.classList.toggle('hidden')
+        e.preventDefault()
+    })
+    )
+} else { // Comportement au clic sur login si pas de token dans le local Sto
     loginButton.addEventListener('click', function () {
         document.location.href = 'login.html'
     })
 }
+
+// INITIALISATION DE LA GALERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE
+const init = async () => {
+    getWorks().then(projects => createGallery(projects))
+    getCategories().then(categories => createCategories(categories))
+}
+init()
