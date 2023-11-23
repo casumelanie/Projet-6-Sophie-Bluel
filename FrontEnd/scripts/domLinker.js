@@ -1,13 +1,15 @@
 // LES APPELS EFFECTUES SUR LE DOM
+export const loginButton = document.getElementById('login-link') // bouton login / logout
+export const editHeader = document.getElementById('edit-header') // header mode édition
+export const editButton = document.getElementById('edit-button') // bouton modifier mode édition
 
-export const body = document.querySelector('body')
-export const loginButton = document.getElementById('login-link')
-export const editButtonContainer = document.getElementById('portfolio-title')
+export const projectGallery = document.querySelectorAll('.gallery') // projets
+export const filterContainer = document.querySelector('#portfolio .portfolio-filters') // filtres
 
-export const projectGallery = document.querySelector('#portfolio .gallery')
-export const filterContainer = document.querySelector('#portfolio .portfolio-filters')
+export const modalEdit = document.getElementById('modal-container') // fenetre modale
+export const triggerModal = document.querySelectorAll('.modal-trigger') // Déclencheur modale
 
-// ELEMENTS DU FORMULAIRE DE CONNEXION
+// Elements du formulaire de connexion
 export const loginEmail = document.getElementById('mail')
 export const loginPassword = document.getElementById('password')
 export const formLogin = document.getElementById('login-form')
