@@ -165,7 +165,6 @@ h1>span {
 	font-family: 'Work Sans';
 	font-size: 10px;
 	letter-spacing: 0.1em;
-	;
 }
 
 h2 {
@@ -310,6 +309,14 @@ header {
 	margin: auto;
 }
 
+button {
+	cursor: pointer;
+}
+
+.hidden {
+	display: none !important;
+}
+
 /* HOMEPAGE */
 :root {
 	--color-green: #1D6154;
@@ -324,12 +331,10 @@ header {
 }
 
 #portfolio .filter-button {
-
 	border: 1px solid var(--color-green);
 	border-radius: 60px;
 	font-size: 16px;
 	font-family: 'Syne';
-	cursor: pointer;
 	padding: 10px;
 	transition: all 0.2s;
 	color: var(--color-green);
@@ -339,6 +344,24 @@ header {
 .filter-button-active {
 	background-color: var(--color-green) !important;
 	color: white !important;
+}
+
+/* Titre portfolio */
+#portfolio-title {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+	margin-bottom: 2rem;
+}
+
+#portfolio-title a {
+	margin-bottom: 30px;
+}
+
+#portfolio-title a span {
+	margin-left: 5px;
 }
 
 /* LOGIN PAGE */
@@ -393,7 +416,6 @@ html {
 	border-radius: 60px;
 	border: none;
 	font-family: 'Syne';
-	cursor: pointer;
 }
 
 #login-section form #forget-password {
@@ -428,46 +450,7 @@ html {
 	color: white;
 }
 
-/* Titre portfolio */
-#portfolio-title {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 25px;
-	margin-bottom: 2rem;
-}
-
-#portfolio-title a {
-	margin-bottom: 30px;
-}
-
-#portfolio-title a span {
-	margin-left: 5px;
-}
-
-.hidden {
-	display: none !important;
-}
-
-/* #modale {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-#modale-container {
-	height: 688px;
-	width: 630px;
-	background-color: white;
-	border-radius: 10px;
-} */
+/* Fenetre modale */
 
 #modal-container {
 	position: fixed;
@@ -480,15 +463,82 @@ html {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background-color: #333333d3;
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal {
-	width: 500px;
-	padding: 30px;
+	width: 630px;
+	height: auto;
+	box-sizing: border-box;
 	background-color: white;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	display: flex;
+	flex-direction: column;
+	border-radius: 10px;
+	padding: 2rem;
+	gap: 20px;
+}
+
+#modal-container .close-modal {
+	border: none;
+	background-color: transparent;
+	align-self: end;
+}
+
+#modal-container .close-modal i {
+	font-size: 20px;
+}
+
+#modal-container span {
+	text-align: center;
+	font-family: 'Work Sans';
+	font-size: 26px;
+}
+
+#modal-container .gallery {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    padding: 0 3rem;
+    box-sizing: border-box;
+    grid-row-gap: 26px;
+	margin-bottom: 2rem;
+}
+
+#modal-container figure {
+	position: relative;
+}
+
+.fa-trash-can {
+	position: absolute;
+    top: 6px;
+    right: 6px;
+    color: white;
+    background-color: black;
+    padding: 4px 5px;
+    border-radius: 2px;
+}
+
+.border {
+	width: 85%;
+	align-self: center;
+	height: 1px;
+	background-color: rgba(179, 179, 179, 1);
+	margin-bottom: 1.5rem;
+}
+
+#modal-container .addProjectButton {
+	background-color: var(--color-green);
+	color: white;
+	border: 1px solid var(--color-green);
+	border-radius: 60px;
+	font-size: 14px;
+	font-family: 'Syne';
+	padding: 10px 45px;
+	transition: all 0.2s;
+	width: fit-content;
+	align-self: center;
 }

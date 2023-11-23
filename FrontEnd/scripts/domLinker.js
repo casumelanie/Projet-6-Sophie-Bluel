@@ -1,4 +1,3 @@
-// LES APPELS EFFECTUES SUR LE DOM
 export const loginButton = document.getElementById('login-link') // bouton login / logout
 export const editHeader = document.getElementById('edit-header') // header mode édition
 export const editButton = document.getElementById('edit-button') // bouton modifier mode édition
