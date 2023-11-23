@@ -10,7 +10,7 @@ const get = url => fetch(url).then(response => response.json())
 export const getWorks = () => get(URL_WORKS)
 export const getCategories = () => get(URL_CATEGORIES)
 
-// METHODE POST CONNEXION
+// METHODE CONNEXION
 export const postLogin = userLogin => fetch(URL_LOGIN, {
     method: 'POST',
     headers: {
