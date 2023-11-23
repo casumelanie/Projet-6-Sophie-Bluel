@@ -94,8 +94,9 @@ if (localStorage.token) {
         document.location.href = 'index.html' // Redir pour actualisation
     })
     // Ouverture / fermeture de la modale
-    triggerModal.forEach(trigger => trigger.addEventListener('click', function () {
+    triggerModal.forEach(trigger => trigger.addEventListener('click', function (e) {
         modalEdit.classList.toggle('hidden')
+        e.preventDefault()
     })
     )
 } else { // Comportement au clic sur login si pas de token dans le local Sto

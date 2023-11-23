@@ -6,7 +6,7 @@ export const projectGallery = document.querySelectorAll('.gallery') // projets
 export const filterContainer = document.querySelector('#portfolio .portfolio-filters') // filtres
 
 export const modalEdit = document.getElementById('modal-container') // fenetre modale
-export const triggerModal = document.querySelectorAll('.modal-trigger') // Déclencheur modale
+export const triggerModal = document.querySelectorAll('.modal-trigger') // Déclencheur ouverture/fermeture modale
 
 // Elements du formulaire de connexion
 export const loginEmail = document.getElementById('mail')
