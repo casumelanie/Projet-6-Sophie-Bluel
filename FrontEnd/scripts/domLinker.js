@@ -11,4 +11,4 @@ export const triggerModal = document.querySelectorAll('.modal-trigger') // Décl
 // Elements du formulaire de connexion
 export const loginEmail = document.getElementById('mail')
 export const loginPassword = document.getElementById('password')
-export const formLogin = document.getElementById('login-form')
+export const loginForm = document.getElementById('login-form')
