@@ -22,3 +22,16 @@ export const postLogin = userLogin => fetch(URL_LOGIN, {
     .catch(error => {
         throw error
     })
+
+// METHODE SUPPRESSION PROJET
+export const deleteWork = id => fetch(`${URL_WORKS}/${id}`, {
+    method: 'DELETE',
+    headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'My-Custom-Header': 'foobar'
+    }
+})
+    .then(() => alert('Ce projet a bien été supprimé'))
+    .catch(error => {
+        throw error
+    })
