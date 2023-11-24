@@ -24,14 +24,14 @@ export const postLogin = userLogin => fetch(URL_LOGIN, {
     })
 
 // METHODE SUPPRESSION PROJET
-export const deleteWork = id => fetch(URL_DELETE, {
+export const deleteWork = id => fetch(`${URL_WORKS}/${id}`, {
     method: 'DELETE',
     headers: {
         Authorization: `Bearer ${localStorage.token}`,
         'My-Custom-Header': 'foobar'
     }
 })
-    .then(() => element.innerHTML = 'Delete successful')
+    .then(() => alert('Ce projet a bien été supprimé'))
     .catch(error => {
         throw error
     })
