@@ -2,6 +2,7 @@
 const URL_WORKS = 'http://localhost:5678/api/works'
 const URL_CATEGORIES = 'http://localhost:5678/api/categories'
 const URL_LOGIN = 'http://localhost:5678/api/users/login'
+const URL_DELETE = 'http://localhost:5678/api/works/{id}'
 
 // METHODE GET API GENERALE
 const get = url => fetch(url).then(response => response.json())
@@ -23,7 +24,7 @@ export const postLogin = userLogin => fetch(URL_LOGIN, {
         throw error
     })
 
-// METHODE SUPPRESSION PROJET
+/* METHODE SUPPRESSION PROJET
 export const deleteWork = id => fetch(URL_DELETE, {
     method: 'DELETE',
     headers: {
@@ -35,3 +36,4 @@ export const deleteWork = id => fetch(URL_DELETE, {
     .catch(error => {
         throw error
     })
+*/

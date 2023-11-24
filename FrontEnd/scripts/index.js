@@ -1,4 +1,4 @@
-import { getWorks, getCategories } from './api.js'
+import { getWorks, getCategories /* deleteWork */ } from './api.js'
 import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS POUR CHAQUE GALERIE
@@ -28,7 +28,14 @@ const createGallery = projects => {
                 modalProject.appendChild(trashIcon)
                 const projectTitle = document.querySelector('.modal-gallery figcaption')
                 modalProject.removeChild(projectTitle)
+                // Supression du projet au clic sur la corbeille
+                trashIcon.addEventListener('click', function () {
+                    // deleteWork(modalProject.)
+                    console.log('clic corbeille')
+                    console.log(modalProject)
+                })
             })
+            console.log(modalProjects)
         }
     })
 }
