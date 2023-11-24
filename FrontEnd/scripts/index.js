@@ -1,4 +1,4 @@
-import { getWorks, getCategories /* deleteWork */ } from './api.js'
+import { getWorks, getCategories, deleteWork } from './api.js'
 import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS POUR CHAQUE GALERIE
@@ -10,33 +10,32 @@ const createGallery = projects => {
         projects.forEach(project => {
             const projectCard = document.createElement('figure')
             const projectImg = document.createElement('img')
-            const projectTitle = document.createElement('figcaption')
             projectImg.src = project.imageUrl
             projectImg.alt = project.title
-            projectTitle.innerText = project.title
             projectCard.appendChild(projectImg)
-            projectCard.appendChild(projectTitle)
-            gallery.appendChild(projectCard)
-        })
 
-        // Fenetre modale : ajout corbeille et supression titre projet
-        if (index === 1) {
-            const modalProjects = document.querySelectorAll('.modal-gallery figure')
-            modalProjects.forEach(modalProject => {
+            // homepage : Création du titre du projet
+            if (index === 0) {
+                const projectTitle = document.createElement('figcaption')
+                projectTitle.innerText = project.title
+                projectCard.appendChild(projectTitle)
+            }
+
+            // Fenetre modale : ajout corbeille et supression titre projet
+            if (index === 1) {
                 const trashIcon = document.createElement('i')
                 trashIcon.classList.add('fa-trash-can', 'fa-solid')
-                modalProject.appendChild(trashIcon)
-                const projectTitle = document.querySelector('.modal-gallery figcaption')
-                modalProject.removeChild(projectTitle)
+                projectCard.appendChild(trashIcon)
+
                 // Supression du projet au clic sur la corbeille
                 trashIcon.addEventListener('click', function () {
-                    // deleteWork(modalProject.)
-                    console.log('clic corbeille')
-                    console.log(modalProject)
+                    deleteWork(project.id)
+                        .then(() => getWorks())
+                        .then(updatedProjects => createGallery(updatedProjects))
                 })
-            })
-            console.log(modalProjects)
-        }
+            }
+            gallery.appendChild(projectCard)
+        })
     })
 }
 
