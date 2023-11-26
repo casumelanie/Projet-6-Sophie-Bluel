@@ -1,5 +1,5 @@
-import { getWorks, getCategories, deleteWork } from './api.js'
-import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal } from './domLinker.js'
+import { getWorks, getCategories, deleteWork, addWork } from './api.js'
+import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal, addProjectButton, firstModal, secondModal, returnBack, formNewProject, inputImgNewProject, imgNewProject, titleNewProject, categoriesNewProject, inputFileContent, pushProjectButton } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS POUR CHAQUE GALERIE
 const createGallery = projects => {
@@ -103,8 +103,24 @@ if (localStorage.token) {
     triggerModal.forEach(trigger => trigger.addEventListener('click', function (e) {
         modalEdit.classList.toggle('hidden')
         e.preventDefault()
+    }))
+    // Changement de modale pour ajouter un projet
+    addProjectButton.addEventListener('click', function (e) {
+        e.preventDefault()
+        firstModal.classList.add('hidden')
+        secondModal.classList.remove('hidden')
     })
-    )
+    // Retour vers la modale 1 au clic sur la flèche
+    returnBack.addEventListener('click', function () {
+        firstModal.classList.remove('hidden')
+        secondModal.classList.add('hidden')
+    })
+    // Ajout des catégories dans la modale d'ajout photo
+    getCategories().then(categories => {
+        categories.forEach(function (element, id) {
+            categoriesNewProject[id] = new Option(element.name, element.id)
+        })
+    })
 } else { // Comportement au clic sur login si pas de token dans le local Sto
     loginButton.addEventListener('click', function () {
         document.location.href = 'login.html'
@@ -117,3 +133,50 @@ const init = async () => {
     getCategories().then(categories => createCategories(categories))
 }
 init()
+
+// AJOUT IMAGE NOUVEAU PROJET
+inputImgNewProject.onchange = e => {
+    const file = e.target.files[0]
+    // Règles ajout de l'image
+    if (file.size > 4194304) {
+        alert('Le fichier est trop volumineux')
+    } else if (file.type !== 'image/png' && file.type !== 'image/jpg') {
+        alert('Le fichier n\'est pas au format .png ou .jpg')
+    } else {
+        // Apercu de l'image
+        imgNewProject.src = URL.createObjectURL(e.target.files[0])
+        inputFileContent.forEach(content => {
+            content.classList.add('hidden')
+        })
+    }
+}
+
+// REGLE AJOUT TITRE NOUVEAU PROJET
+const regex = new RegExp('^[a-zA-Z"\\s-]+$')
+titleNewProject.onchange = e => {
+    if (!regex.test(titleNewProject.value)) {
+        alert('Veuillez donner un titre valide au projet : vous pouvez seulement utiliser des lettres, des " et des -')
+    }
+}
+
+// BOUTON VALIDER MODALE 2
+formNewProject.onchange = e => {
+    if (regex.test(titleNewProject.value) && inputImgNewProject.files.length > 0) {
+        console.log('le formulaire peut etre envoyé')
+        pushProjectButton.classList.add('add-project-button-valid')
+    }
+}
+
+// ENVOI D'UN NOUVEAU PROJET A L'API ET CREATION DU PROJET EN FRONT
+formNewProject.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const newProject = new FormData()
+    newProject.append('title', titleNewProject.value)
+    newProject.append('image', inputImgNewProject.files[0])
+    newProject.append('category', categoriesNewProject.value)
+
+    addWork(newProject)
+        .then(() => {
+            location.reload()
+        })
+})

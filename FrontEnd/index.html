@@ -85,7 +85,7 @@
 	<div id="modal-container" class="hidden">
 		<div class="overlay modal-trigger"></div>
 
-		<div class="modal">
+		<div class="modal-view-project">
 			<i class="fa-solid fa-xmark close-modal modal-trigger"></i>
 			<span>Galerie photo</span>
 
@@ -93,7 +93,7 @@
 			</div>
 
 			<div class="separator"></div>
-			<a href="#" id="" class="addProjectButton">Ajouter une photo</a>
+			<a href="#" id="add-project-button" class="modal-button">Ajouter une photo</a>
 		</div>
 
 		<div class="modal-add-project hidden">
@@ -103,9 +103,24 @@
 			</div>
 
 			<span>Ajout photo</span>
-
-			<div class="separator"></div>
-			<a href="#" id="" class="addProjectButton addProjectPush">Valider</a>
+			<form id="form-add-project" action="#" method="post">
+				<label for="add-img">
+					<input type="file" id="add-img" name="add-img" accept="image/*" required>
+					<img src="" alt="" id="img-new-project">
+					<i class="fa-regular fa-image input-file-content"></i>
+					<span id="add-img-button" class="input-file-content">+ Ajouter photo</span>
+					<span id="add-img-description" class="input-file-content">jpg, png : 4mo max</span>
+				</label>
+				<fieldset>
+					<label for="title">Titre</label>
+					<input type="text" id="title" name="title" required>
+					<label for="categorie">Catégorie</label>
+					<select id="categorie" name="categorie" required>
+					</select>
+				</fieldset>
+				<div class="separator"></div>
+				<input type="submit" id="add-project-push" class="" value="Valider">
+			</form>
 		</div>
 	</div>
 
