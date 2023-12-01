@@ -1,5 +1,5 @@
 import { getWorks, getCategories, deleteWork, addWork } from './api.js'
-import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal, addProjectButton, firstModal, secondModal, returnBack, formNewProject, inputImgNewProject, imgNewProject, titleNewProject, categoriesNewProject, inputFileContent, pushProjectButton } from './domLinker.js'
+import { projectGallery, filterContainer, loginButton, editHeader, editButton, modalEdit, triggerModal, addProjectButton, firstModal, secondModal, returnBack, formNewProject, inputImgNewProject, imgNewProject, titleNewProject, categoriesNewProject, inputFileContent, pushProjectButton, errorFile, errorTitle } from './domLinker.js'
 
 // METHODE DE CREATION DES PROJETS POUR CHAQUE GALERIE
 const createGallery = projects => {
@@ -54,7 +54,7 @@ const createCategories = categories => {
         btnsFilter.forEach(btn => {
             btn.classList.remove('filter-button-active') // Suppression de la classe active de tous les btns
         })
-        filterButtonAll.classList.add('filter-button-active') // Ajouts de la classe active au btn All
+        filterButtonAll.classList.add('filter-button-active') // Ajout de la classe active au btn All
 
         // Affichage de la galerie au clic sur le filtre All
         getWorks().then(projects => createGallery(projects))
@@ -94,15 +94,17 @@ if (localStorage.token) {
     editButton.classList.remove('hidden')
     filterContainer.classList.add('hidden')
     loginButton.addEventListener('click', function () {
-        // Suppression du token dans le local sto au clic sur logout + maj affichage
+        // Suppression du token dans le local storage au clic sur logout + maj affichage
         localStorage.clear()
         loginButton.innerText = 'login'
-        document.location.href = 'index.html' // Redir pour actualisation
+        document.location.href = 'index.html' // Redirection pour actualisation
     })
     // Ouverture / fermeture de la modale
     triggerModal.forEach(trigger => trigger.addEventListener('click', function (e) {
         modalEdit.classList.toggle('hidden')
         e.preventDefault()
+        // Reinitialisation du formulaire d'envoi d'un nouveau projet
+        resetForm()
     }))
     // Changement de modale pour ajouter un projet
     addProjectButton.addEventListener('click', function (e) {
@@ -114,6 +116,8 @@ if (localStorage.token) {
     returnBack.addEventListener('click', function () {
         firstModal.classList.remove('hidden')
         secondModal.classList.add('hidden')
+        // Reinitialisation du formulaire d'envoi d'un nouveau projet
+        resetForm()
     })
     // Ajout des catégories dans la modale d'ajout photo
     getCategories().then(categories => {
@@ -134,49 +138,103 @@ const init = async () => {
 }
 init()
 
-// AJOUT IMAGE NOUVEAU PROJET
-inputImgNewProject.onchange = e => {
-    const file = e.target.files[0]
+// FORMULAIRE D'AJOUT D'UN NOUVEAU PROJET
+// Règle image
+inputImgNewProject.addEventListener('input', () => {
+    // vérif image + prévisualisation
+    fileIsValid()
+    // vérification du formulaire
+    if (titleIsValid()) {
+        formIsValid()
+    }
+})
+
+const fileIsValid = () => {
+    const file = inputImgNewProject.files[0]
     // Règles ajout de l'image
     if (file.size > 4194304) {
-        alert('Le fichier est trop volumineux')
-    } else if (file.type !== 'image/png' && file.type !== 'image/jpg') {
-        alert('Le fichier n\'est pas au format .png ou .jpg')
+        errorFile.classList.remove('hidden')
+        return false
+    } else if (file.type !== 'image/png' && file.type !== 'image/jpg' && file.type !== 'image/jpeg') {
+        errorFile.classList.remove('hidden')
+        return false
     } else {
-        // Apercu de l'image
-        imgNewProject.src = URL.createObjectURL(e.target.files[0])
+        // Aperçu de l'image
+        imgNewProject.classList.remove('hidden')
+        imgNewProject.src = URL.createObjectURL(file)
+        imgNewProject.alt = titleNewProject.value
         inputFileContent.forEach(content => {
             content.classList.add('hidden')
         })
+        errorFile.classList.add('hidden')
+        return true
     }
 }
 
-// REGLE AJOUT TITRE NOUVEAU PROJET
-const regex = new RegExp('^[a-zA-Z"\\s-]+$')
-titleNewProject.onchange = e => {
-    if (!regex.test(titleNewProject.value)) {
-        alert('Veuillez donner un titre valide au projet : vous pouvez seulement utiliser des lettres, des " et des -')
+// Règle titre
+titleNewProject.addEventListener('input', () => {
+    // vérification du titre
+    titleIsValid()
+    // vérification du formulaire
+    if (fileIsValid()) {
+        formIsValid()
     }
+})
+const regex = /^[a-zA-Z"](?:[a-zA-Z"\s-]*[a-zA-Z"])$/
+const titleIsValid = () => {
+    if (titleNewProject.value.length > 0) {
+        if (!regex.test(titleNewProject.value)) {
+            errorTitle.classList.remove('hidden')
+            return false
+        }
+        errorTitle.classList.add('hidden')
+        return true
+    }
+    return false
 }
 
-// BOUTON VALIDER MODALE 2
-formNewProject.onchange = e => {
-    if (regex.test(titleNewProject.value) && inputImgNewProject.files.length > 0) {
-        console.log('le formulaire peut etre envoyé')
+// Actualisation style bouton envoi du projet
+const formIsValid = () => {
+    if (titleIsValid() && fileIsValid()) {
         pushProjectButton.classList.add('add-project-button-valid')
+        errorFile.classList.add('hidden')
+        errorTitle.classList.add('hidden')
+        return true
+    } else {
+        pushProjectButton.classList.remove('add-project-button-valid')
+        return false
     }
 }
 
-// ENVOI D'UN NOUVEAU PROJET A L'API ET CREATION DU PROJET EN FRONT
+// Envoi du nouveau projet si formulaire valide
 formNewProject.addEventListener('submit', (e) => {
     e.preventDefault()
-    const newProject = new FormData()
-    newProject.append('title', titleNewProject.value)
-    newProject.append('image', inputImgNewProject.files[0])
-    newProject.append('category', categoriesNewProject.value)
+    if (formIsValid()) {
+        const newProject = new FormData()
+        newProject.append('title', titleNewProject.value)
+        newProject.append('image', inputImgNewProject.files[0])
+        newProject.append('category', categoriesNewProject.value)
+        resetForm()
+        firstModal.classList.remove('hidden')
+        secondModal.classList.add('hidden')
 
-    addWork(newProject)
-        .then(() => {
-            location.reload()
-        })
+        // Actualisation de la galerie
+        addWork(newProject)
+            .then(() => getWorks())
+            .then(updatedProjects => createGallery(updatedProjects))
+    }
 })
+
+// Fonction de réinitialisation du formulaire
+const resetForm = () => {
+    errorTitle.classList.add('hidden')
+    errorFile.classList.add('hidden')
+    formNewProject.reset()
+    imgNewProject.src = ''
+    imgNewProject.alt = ''
+    imgNewProject.classList.add('hidden')
+    inputFileContent.forEach(content => {
+        content.classList.remove('hidden')
+    })
+    pushProjectButton.classList.remove('add-project-button-valid')
+}

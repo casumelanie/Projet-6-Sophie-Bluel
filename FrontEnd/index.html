@@ -103,10 +103,10 @@
 			</div>
 
 			<span>Ajout photo</span>
-			<form id="form-add-project" action="#" method="post">
+			<form id="form-add-project" action="#" method="post" enctype="multipart/form-data">
 				<label for="add-img">
 					<input type="file" id="add-img" name="add-img" accept="image/*" required>
-					<img src="" alt="" id="img-new-project">
+					<img src="" alt="" id="img-new-project" class="hidden">
 					<i class="fa-regular fa-image input-file-content"></i>
 					<span id="add-img-button" class="input-file-content">+ Ajouter photo</span>
 					<span id="add-img-description" class="input-file-content">jpg, png : 4mo max</span>
@@ -118,6 +118,8 @@
 					<select id="categorie" name="categorie" required>
 					</select>
 				</fieldset>
+				<span id="form-error-file" class="form-error hidden">Le fichier est trop volumineux ou n'est pas au bon format</span>
+				<span id="form-error-title" class="form-error hidden">Veuillez donner un titre valide au projet (caractères autorisés : lettres, " et -)</span>
 				<div class="separator"></div>
 				<input type="submit" id="add-project-push" class="" value="Valider">
 			</form>

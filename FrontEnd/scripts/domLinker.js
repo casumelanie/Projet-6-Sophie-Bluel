@@ -13,16 +13,19 @@ export const returnBack = document.querySelector('.back-gallery') // Icone qui r
 export const triggerModal = document.querySelectorAll('.modal-trigger') // Déclencheur ouverture/fermeture de la modale
 
 // Elements du formulaire d'ajout de projet
-export const formNewProject = document.getElementById('form-add-project')
+export const formNewProject = document.getElementById('form-add-project') // formulaire
 
-// Elements dans l'input file
-export const inputFileContent = document.querySelectorAll('.input-file-content')
-
+export const inputFileContent = document.querySelectorAll('.input-file-content') // Contenu de l'input file
 export const inputImgNewProject = document.getElementById('add-img') // input image nouveau projet
 export const imgNewProject = document.getElementById('img-new-project') // image du projet
+
 export const titleNewProject = document.getElementById('title') // titre du projet
+
 export const categoriesNewProject = document.getElementById('categorie') // catégories
+
 export const pushProjectButton = document.getElementById('add-project-push') // Bouton d'envoi du formulaire
+export const errorFile = document.getElementById('form-error-file') // message d'erreur fichier
+export const errorTitle = document.getElementById('form-error-title') // message d'erreur titre
 
 // Elements du formulaire de connexion
 export const loginEmail = document.getElementById('mail')

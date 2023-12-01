@@ -650,4 +650,10 @@ button {
 .add-project-button-valid {
 	background-color: var(--color-green) !important;
 	color: white !important;
+	cursor: pointer;
+}
+
+.form-error {
+	font-size: 8px !important;
+	color: red;
 }
