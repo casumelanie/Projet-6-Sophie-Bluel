@@ -272,7 +272,7 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
+#contact input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -410,6 +410,7 @@ button {
 	background-color: var(--color-green) !important;
 	color: white !important;
 }
+
 /* Portfolio titre */
 #portfolio-title {
 	display: flex;
@@ -467,7 +468,7 @@ button {
 	background-color: rgba(0, 0, 0, 0.3);
 }
 
-#modal-container .modal,
+#modal-container .modal-view-project,
 #modal-container .modal-add-project {
 	width: 630px;
 	height: 688px;
@@ -504,7 +505,7 @@ button {
 	margin-bottom: 2rem;
 }
 
-/* Modale projets */
+/* Modale view projets */
 #modal-container .gallery {
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
@@ -529,8 +530,7 @@ button {
 	border-radius: 2px;
 }
 
-#modal-container .addProjectButton,
-#modal-container .addProjectPush {
+#modal-container .modal-button {
 	background-color: var(--color-green);
 	color: white;
 	border: 1px solid var(--color-green);
@@ -559,7 +559,101 @@ button {
 	font-size: 20px;
 }
 
-#modal-container .addProjectPush {
-	background-color: rgba(167, 167, 167, 1) !important;
-	border-color: rgba(167, 167, 167, 1) !important;
+#modal-container #form-add-project {
+	width: 85%;
+	margin: auto;
+}
+
+#modal-container #form-add-project label[for=add-img] {
+	height: 169px;
+	background-color: rgba(232, 241, 246, 1);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	margin: 15px 0;
+}
+
+#modal-container #form-add-project label[for=add-img] i {
+	font-size: 60px;
+	color: rgba(203, 214, 220, 1);
+}
+
+#modal-container #form-add-project label[for=add-img] #add-img-button {
+	background-color: rgba(203, 214, 220, 1);
+	color: rgba(48, 102, 133, 1);
+	border: 1px solid rgba(203, 214, 220, 1);
+	border-radius: 50px;
+	font-size: 14px;
+	font-family: 'Syne';
+	padding: 10px 45px;
+	transition: all 0.2s;
+	margin: 10px 0 5px 0;
+	cursor: pointer;
+}
+
+#modal-container #form-add-project label[for=add-img] #add-img-description {
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 12px;
+	letter-spacing: 0em;
+	text-align: center;
+	color: rgba(68, 68, 68, 1);
+}
+
+#modal-container #form-add-project input[type=file] {
+	display: none;
+}
+
+#modal-container #form-add-project label[for=add-img] img {
+	position: absolute;
+	height: 169px;
+}
+
+#modal-container #form-add-project,
+#modal-container #form-add-project fieldset {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+#modal-container #form-add-project .separator {
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+	width: 100%;
+}
+
+#modal-container #form-add-project fieldset input,
+#modal-container #form-add-project fieldset select {
+	font-family: 'Work Sans';
+	padding: 15px;
+	font-size: 14px;
+	font-weight: 400;
+	border: none;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	color: rgba(68, 68, 68, 1);
+}
+
+#modal-container #add-project-push {
+	background-color: rgba(167, 167, 167, 1);
+	border: 1px solid rgba(167, 167, 167, 1);
+	color: white;
+	border-radius: 60px;
+	font-size: 14px;
+	font-family: 'Syne';
+	padding: 10px 90px;
+	transition: all 0.2s;
+	align-self: center;
+}
+
+.add-project-button-valid {
+	background-color: var(--color-green) !important;
+	color: white !important;
+	cursor: pointer;
+}
+
+.form-error {
+	font-size: 8px !important;
+	color: red;
 }

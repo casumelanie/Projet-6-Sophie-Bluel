@@ -35,3 +35,19 @@ export const deleteWork = id => fetch(`${URL_WORKS}/${id}`, {
     .catch(error => {
         throw error
     })
+
+// METHODE AJOUT D'UN PROJET
+export const addWork = newProjectDescription => fetch(URL_WORKS, {
+    method: 'POST',
+    headers: {
+        Authorization: `Bearer ${localStorage.token}`
+    },
+    body: newProjectDescription
+})
+    .then(response => {
+        alert('Ce projet a bien été ajouté')
+        return response.json()
+    })
+    .catch(error => {
+        throw error
+    })

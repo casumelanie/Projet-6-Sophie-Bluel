@@ -2,7 +2,7 @@ import { postLogin } from './api.js'
 import { loginEmail, loginPassword, loginForm } from './domLinker.js'
 
 // Lancement de la fonction connexion au clic sur submit
-loginForm.addEventListener('submit', async function (e) {
+loginForm.addEventListener('submit', function (e) {
     e.preventDefault()
     // Récupération de l'user et du mdp renseignés
     const user = {
