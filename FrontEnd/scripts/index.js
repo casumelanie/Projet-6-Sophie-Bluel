@@ -132,7 +132,7 @@ if (localStorage.token) {
 }
 
 // INITIALISATION DE LA GALERIE ET DES PROJETS A L'OUVERTURE DE LA PAGE
-const init = async () => {
+const init = () => {
     getWorks().then(projects => createGallery(projects))
     getCategories().then(categories => createCategories(categories))
 }
