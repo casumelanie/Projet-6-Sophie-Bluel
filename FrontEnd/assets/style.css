@@ -603,7 +603,9 @@ button {
 }
 
 #modal-container #form-add-project input[type=file] {
-	display: none;
+	opacity: 0;
+	position: absolute;
+	bottom: 0;
 }
 
 #modal-container #form-add-project label[for=add-img] img {
